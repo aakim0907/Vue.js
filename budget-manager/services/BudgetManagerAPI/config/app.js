@@ -26,3 +26,12 @@ app.set('budgetsecret', config.secret);
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //   next();
 // });
+
+consign({ cwd: 'services' })
+  // load setup first so that models are instatiated first
+  .include('BudgetManagerAPI/app/setup')
+  .then('BudgetManagerAPI/app/api')
+  .then('BudgetManagerAPI/app/routes')
+  .into(app);
+
+module.exports = app;
